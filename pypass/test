@@ -1,0 +1,21 @@
+On PolySecurise - not authentificated :
+
+Tried                         | Works |   Comment   
+ping google.com                 0       Finds ip but no response 
+wget [anysite.com]              0       gets the authentification page
+ssh j4v13r.com                  0       -
+scapy ICMP (1)                  0       no route found
+
+
+sniff traffic when trying to go on 9gag.com
+before auth
+ec2-54-241-19-28.us-west-1.compute.amazonaws.com
+after auth
+server-54-230-38-14.jfk1.r.cloudfront.net
+
+ifconfig wlp3s0 promisc
+tcpdump -i wlp3s0 tcp dst port 80 and host 132.207.222.204
+
+
+(1) srp1( Ether()/IP(dst='google.com', ttl=22)/ICMP()/'XXX' )
+
