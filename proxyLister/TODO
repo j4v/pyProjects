@@ -1,0 +1,5 @@
+validate socks properly
+
+implement locks on process threads so as to not have to close the file every time
+
+implement for other websites
