@@ -9,23 +9,6 @@
 
 # check : http://stackoverflow.com/questions/10860983/python-proxy-list-check
 
-'''
-SPSE proxy 
-
-Mechanize :
-browser.set_proxies({'http' : ip:port })
-
-urllib :
-proxy_setting = urllib2.ProxyHandler({ 'http' : ip:port })
-opener = urllib2.build_opener(proxy_setting)
-urllib2.install_opener(opener)
-html = urllib2.urlopen(website)
-
-
-!= 200 http://www.r3oath.com/2013/05/8legs-python-web-spider/
-
-'''
-
 #####################
 # Imports			#
 #####################
@@ -61,10 +44,11 @@ base_url ="http://hidemyass.com/proxy-list/"
 # Determine if the ip and port is a valid http proxy
 def valid_http(ip, port) :
 	try :
-		proxy_setting = urllib2.ProxyHandler({ 'http' : 'http://'+ip+':'+port+'/' })
-		opener = urllib2.build_opener(proxy_setting)
-		urllib2.install_opener(opener)
-		html = urllib2.urlopen('http://google.com')
+		proxy_handler = urllib2.ProxyHandler({'http': 'http://'+ip+':'+port+'/'})
+		proxy_auth_handler = urllib2.ProxyBasicAuthHandler()
+		opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+		opener.addheaders = [('User-agent','Mozilla/5.0')]
+		opener.open('http://google.com')
 	except Exception, e :
 		#print e,' : ',self.proxy_type,self.ip
 		return False
@@ -74,10 +58,11 @@ def valid_http(ip, port) :
 # Determine if the ip and port is a valid https proxy
 def valid_https(ip, port) :
 	try :
-		proxy_setting = urllib2.ProxyHandler({ 'http' : 'https://'+ip+':'+port+'/' })
-		opener = urllib2.build_opener(proxy_setting)
-		urllib2.install_opener(opener)
-		html = urllib2.urlopen('http://google.com')
+		proxy_handler = urllib2.ProxyHandler({'http': 'https://'+ip+':'+port+'/'})
+		proxy_auth_handler = urllib2.ProxyBasicAuthHandler()
+		opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+		opener.addheaders = [('User-agent','Mozilla/5.0')]
+		opener.open('http://google.com')
 	except Exception, e :
 		#print e,' : ',self.proxy_type,self.ip
 		return False
