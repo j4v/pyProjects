@@ -1,8 +1,12 @@
 #!/usr/bin/python2.7
 
+__author__      = "j4v"
+__copyright__   = "Copyright 2013"
+__license__     = "GPL v3"
+
 # exe_to_bmp.py
-# Takes a file, xor's every byte and stores the result in a bitmap file.
-# Usage : ./exe_to_bmp.py in.exe XORvalue out.bmp
+# Takes a file, and generates a bmp for a given width.
+# Usage : ./file_to_bmp.py in.file width out.file
 
 #################
 # IMPORTS       #
@@ -18,7 +22,7 @@ import math
 #################
 
 inFile = sys.argv[1] # file to convert
-xorValue = int(sys.argv[2]) # xor value
+width = int(sys.argv[2]
 outBMP = sys.argv[3] # file to output 
 
 #################
@@ -38,8 +42,7 @@ def nextGreaterSquareRoot(value) :
     else :
         return squareRoot
 
-# Takes a value and returns the nearest greater number divisible by 3 
-# (3 bytes = 1 RBG pixel)
+# Takes a value and returns the nearest greater number divisible by 3
 def nextDivisibleByThree(value) :
     while(value%3 != 0) :
         value += 1
@@ -57,9 +60,9 @@ os.system("xxd -ps "+inFile+" > hex.dump")
 
 #------------------------------------------------------------------------------#
 
-# Take the hex.dump and ^XORvalue
+# Take the hex.dump and xor^0x13
 # Someone could figure out the value of the XOR if they know it is a exe 
-# by looking for the MZ header.
+# by looking for the MX header.
 
 EXE = open("hex.dump", "r").readlines()
 xoredEXE = "" # will contain all EXE's xored content
@@ -78,7 +81,7 @@ for line in EXE :
 
 #------------------------------------------------------------------------------#
 
-# Construct the bitmap header
+# Construct the bitmap header (yay INF1600)
 
 #   should contain this :
 
@@ -112,20 +115,19 @@ staticHeader2 = 4*chr(0x00)+chr(0x36)+3*chr(0x00)+chr(0x28)+3*chr(0x00)
 staticHeader3 = chr(0x01)+chr(0x00)+chr(0x18)+5*chr(0x00)
 staticHeader4 = 2*(chr(0x12)+chr(0x0B)+2*chr(0x00))+8*chr(0x00)
 
-headerLength = 52
+headerLength = 54
 
 # We want to generate an square image. 
 # The first thing to take in account is that you need 3 bytes for one RBG pixel.
 byteNumber = nextDivisibleByThree(len(xoredEXE))
 pixelNumber = byteNumber / 3
 # Then we calculate the nearest square root 
-width = height = nextGreaterSquareRoot(pixelNumber)
+height = pixel/width
 # Update values
 pixelNumber = width*height
 byteNumber = 3 * pixelNumber
 # Calculate the padding
-paddingNumber = 3*pixelNumber - len(xoredEXE)
-padding = paddingNumber*'A'
+padding = ""
 
 # Now we need to pack the sizes as little endian ASCII values
 width = struct.pack('i', width)

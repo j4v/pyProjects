@@ -1,0 +1,18 @@
+__FILETYPES__
+
+exe/dll     ->  MZ
+pdf         ->  %PDF_._
+html        ->  <!DOCTYPE HTML>
+
+__OPTIONS__
+
+fast        -> parse first kb
+complete    -> parse all file
+
+__OBFUSCATIONS__
+
+xor
+    - other xors
+rot
+
+__ARCHITECTURE__

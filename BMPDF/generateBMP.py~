@@ -76,7 +76,7 @@ black = 3*chr(0x00)
 white = 3*chr(0xff)
 
 # make bitmap file content
-bitmap = bitmapHeader + black + black + black + black + black + black + black + black + black + black + black + black + black + black + black + black
+bitmap = bitmapHeader + black + white + black + white + white + black + white + black + black + white + black + white + white + black + white + black
 # write content to bitmap
 out = open("test.bmp", "w")
 out.write(bitmap)

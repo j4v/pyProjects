@@ -1,0 +1,22 @@
+__FILETYPES__
+
+exe/dll     ->  MZ
+pdf         ->  %PDF_._
+html        ->  <!DOCTYPE HTML>
+
+__OPTIONS__
+
+fast        -> parse first kb
+complete    -> parse all file
+
+__OBFUSCATIONS__
+
+xor
+    - complex xors
+rot
+
+__ARCHITECTURE__
+
+file -> ASCII dump -> hex dump
+    -> generate strings to search -> put them in queue
+        -> create thread for each string to search -> use algorithm to search            
