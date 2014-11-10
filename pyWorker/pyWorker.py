@@ -61,6 +61,7 @@ def main():
         is_some_worker_alive = False
         dead_worker_list = []  # necessary so that we only remove after iterating (not while)
         for worker in worker_threads_list:
+            # todo: error, checking if it is Alive, not alive
             if worker.isAlive():
                 is_some_worker_alive = True
                 worker.lock.acquire()
@@ -72,6 +73,7 @@ def main():
                     worker.alive = False
                     # todo: could create new thread after the other one is dead
             else:
+                print(2)
                 dead_worker_list.append(worker)
         # now we can safely remove them
         for worker in dead_worker_list:
